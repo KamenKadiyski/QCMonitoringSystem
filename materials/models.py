@@ -1,6 +1,7 @@
 from django.db import models
 
 # Create your models here.
+#Модел за описание на материалите. Включва по-голямата част от характеристиките, които са важни за качеството на продукт.
 class Material(models.Model):
     class DurabilityGrade(models.TextChoices):
         LOW = ('LOW', 'Standard - (Internal use)')
@@ -24,13 +25,13 @@ class Material(models.Model):
     mfi_mfr=models.CharField(max_length=3)
     density=models.PositiveSmallIntegerField()
     product_durability=models.CharField(max_length=10,choices=DurabilityGrade.choices)
-    product_optic=models.CharField(max_length=5,choices=OPTICAL_PROPERTIES)
+    product_optic=models.CharField(max_length=10,choices=OPTICAL_PROPERTIES)
     additional_notes = models.TextField()
 
     def __str__(self):
         return self.name
 
-
+#Модел за описание на добавките към материала.
 class Additive(models.Model):
     additive_code=models.CharField(max_length=10)
     name=models.CharField(max_length=100)

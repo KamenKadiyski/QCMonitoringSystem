@@ -1,6 +1,7 @@
 from django.db import models
 
 # Create your models here.
+#Модела описва формуляр за проверка на определени показатели за работата.
 class QCLog(models.Model):
     job_log=models.ForeignKey('jobs.JobLog', on_delete=models.CASCADE,related_name='qc_logs')
     qc_inspector=models.ForeignKey('accounts.Employee', on_delete=models.CASCADE,related_name='employee_logs')
@@ -13,7 +14,7 @@ class QCLog(models.Model):
     runs_with_flash=models.BooleanField(default=False)
     logged_at=models.DateTimeField(auto_now_add=True)
 
-
+#Модела описва открити проблеми с качеството.
 class QCIssue(models.Model):
     job_log=models.ForeignKey('jobs.JobLog', on_delete=models.CASCADE,related_name='qc_issues')
     issue_description=models.TextField()

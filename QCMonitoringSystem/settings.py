@@ -146,3 +146,10 @@ sentry_sdk.init(
     # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
     send_default_pii=True,
 )
+
+
+LOGIN_REDIRECT_URL = 'accounts:home'
+
+LOGOUT_REDIRECT_URL = 'accounts:home'
+
+LOGIN_URL = 'login'

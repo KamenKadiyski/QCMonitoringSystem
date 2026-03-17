@@ -1,10 +1,12 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 # Create your models here.
+#Кратко описание на доставчика
 class Supplier(models.Model):
     name = models.CharField(max_length=100)
-    qc_sample_is_required = models.BooleanField(default=False)
+    mail=models.EmailField()
 
+#Модела опсисва проблеми с качесвото на материал или адитив
 class DeliveryQualityIssue(models.Model):
     supplier=models.ForeignKey(Supplier, on_delete=models.CASCADE,related_name='delivery_quality_issues')
     material=models.ForeignKey('materials.Material',
@@ -31,7 +33,7 @@ class DeliveryQualityIssue(models.Model):
 
 
 
-
+#Кратко описание на клиента
 class Customer(models.Model):
     name = models.CharField(max_length=100)
     customer_own_labeling=models.BooleanField(default=False)

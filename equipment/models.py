@@ -45,7 +45,7 @@ class Machine(models.Model):
     max_injection_capacity=models.FloatField(validators=[min_value_validator])
     max_ejecting_stroke=models.FloatField(validators=[min_value_validator])
     number_of_ejector_cores=models.IntegerField(validators=[min_value_validator])
-    compatible_tools=models.ManyToManyField(Tool, related_name='compatible_machines', blank=True,null=True)
+    compatible_tools=models.ManyToManyField(Tool, related_name='compatible_machines')
     class Meta:
         constraints=[
             models.UniqueConstraint(

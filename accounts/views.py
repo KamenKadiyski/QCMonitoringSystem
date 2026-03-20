@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.urls.base import reverse
+
 
 def home_view(request):
     user = request.user
@@ -17,8 +19,8 @@ def home_view(request):
         # АКО Е SUPERUSER - добавяме всичко директно и връщаме резултата
         if user.is_superuser:
             menu_items.extend([
-                {'title': 'QC Logging', 'url': '', 'icon': 'journal-check', 'color': 'text-primary'},
-                {'title': 'Jobs', 'url': '', 'icon': 'briefcase', 'color': 'text-primary'},
+                {'title': 'QC Logging', 'url': reverse('jobs:list_jobs'), 'icon': 'journal-check', 'color': 'text-primary'},
+                {'title': 'Jobs', 'url': reverse('jobs:list_jobs'), 'icon': 'briefcase', 'color': 'text-primary'},
                 {'title': 'Trading Parties', 'url': '', 'icon': 'building', 'color': 'text-primary'},
                 {'title': 'Accounts (HR)', 'url': '', 'icon': 'person-gear', 'color': 'text-info'},
                 {'title': 'Materials', 'url': '', 'icon': 'box-seam', 'color': 'text-warning'},
@@ -33,7 +35,7 @@ def home_view(request):
         if 'QC Manager' in user_groups:
             menu_items.extend([
                 {'title': 'QC Logging', 'url': '', 'icon': 'journal-check', 'color': 'text-primary'},
-                {'title': 'Jobs', 'url': '', 'icon': 'briefcase', 'color': 'text-primary'},
+                {'title': 'Jobs', 'url': reverse('jobs:list_jobs'), 'icon': 'briefcase', 'color': 'text-primary'},
                 {'title': 'Trading Parties', 'url': '', 'icon': 'building', 'color': 'text-primary'},
             ])
 

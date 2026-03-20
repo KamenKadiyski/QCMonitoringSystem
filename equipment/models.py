@@ -47,11 +47,8 @@ class Machine(models.Model):
     number_of_ejector_cores=models.IntegerField(validators=[min_value_validator])
     compatible_tools=models.ManyToManyField(Tool, related_name='compatible_machines')
     class Meta:
-        constraints=[
-            models.UniqueConstraint(
-                fields=['machine_number', 'building'],
-                name='machine_code'
-            )
+        constraints = [
+            models.UniqueConstraint(fields=['machine_number', 'building'], name='machine_code')
         ]
 
     def __str__(self):

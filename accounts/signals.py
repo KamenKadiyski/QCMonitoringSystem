@@ -20,7 +20,7 @@ def create_user_for_employee(sender, instance, created, **kwargs):
     if not created or not instance.login_required or instance.user:
         return
 
-    pre_username = slugify(f"{instance.first_name}.{instance.last_name}")
+    pre_username = slugify(f"{instance.first_name}-{instance.last_name}")
     username = pre_username
     i = 1
 

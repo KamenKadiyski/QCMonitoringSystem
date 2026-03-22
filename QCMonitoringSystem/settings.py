@@ -40,6 +40,7 @@ PROJECT_APPS = [
     'qcloging',
     'reports',
     'traidingparties',
+    'rest_framework',
 
 ]
 INSTALLED_APPS = [

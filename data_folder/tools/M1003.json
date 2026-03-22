@@ -1,5 +1,5 @@
 {
-    "code": "MOLD-BMB-01",
+    "code": "BMB-01",
     "description": "Матрица за логистична каса (Е2) - 1 гнездо",
     "clamping_force": 9500,
     "tool_width": 1050.0,

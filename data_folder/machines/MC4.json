@@ -1,6 +1,6 @@
 {
     "machine_number": "BMB-04",
-    "building": 1,
+    "building": 3,
     "machine_model": "eKW 38PI/2200",
     "machine_description": "High-speed precision machine for closures and small technical parts.",
     "max_clamping_force": 2200,

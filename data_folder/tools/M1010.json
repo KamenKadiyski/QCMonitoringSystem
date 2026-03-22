@@ -1,5 +1,5 @@
 {
-    "code": "MOLD-BMB-02",
+    "code": "BMB-02",
     "description": "Матрица за капачки 24 гнезда (съвместима с BMB KW280/2200)",
     "clamping_force": 2500,
     "tool_width": 600.0,

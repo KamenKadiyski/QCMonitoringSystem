@@ -1,5 +1,5 @@
 {
-    "code": "MOLD-BMB-03",
+    "code": "BMB-03",
     "description": "Матрица за логистична каса (съвместима с BMB MC350/2200)",
     "clamping_force": 3400,
     "tool_width": 880.0,

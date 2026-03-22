@@ -1,5 +1,5 @@
 {
-    "code": "MOLD-BMB-04",
+    "code": "BMB-04",
     "description": "Матрица за капаци за контейнери - 4 гнезда",
     "clamping_force": 6500,
     "tool_width": 1100.0,

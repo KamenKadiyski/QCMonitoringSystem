@@ -1,6 +1,6 @@
 {
     "machine_number": "BMB-02",
-    "building": 1,
+    "building": 2,
     "machine_model": "eKW 85PI/8500",
     "machine_description": "Hybrid/Electric machine optimized for speed and high tonnage applications.",
     "max_clamping_force": 8500,

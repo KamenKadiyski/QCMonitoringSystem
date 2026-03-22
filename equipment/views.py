@@ -1,13 +1,35 @@
 from django.shortcuts import render
 import json
+
+from rest_framework.reverse import reverse
+from django.views.generic.list import ListView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
 from rest_framework import status
+
+from .models import *
 from .serializers import MachineSerializer, ToolSerializer, FileUploadSerializer
 
 
 # Create your views here.
+
+class CombinedEquipmentView(APIView):
+    def get(self, request):
+        machines = Machine.objects.all()
+        tools = Tool.objects.all()
+        machine_serializer = MachineSerializer(machines, many=True)
+        tool_serializer = ToolSerializer(tools, many=True)
+        return Response({
+            'actions': {
+                'upload_machine': reverse('equipment:machine_upload', request=request),
+                'upload_tool': reverse('equipment:tool_upload', request=request),
+            },
+            'machines': machine_serializer.data,
+            'tools': tool_serializer.data
+        })
+
+
 
 
 class BaseUploadView(APIView):

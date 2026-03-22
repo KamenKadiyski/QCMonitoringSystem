@@ -5,6 +5,8 @@ from django.core.exceptions import ValidationError
 class Supplier(models.Model):
     name = models.CharField(max_length=100)
     mail=models.EmailField()
+    def __str__(self):
+        return self.name
 
 #Модела опсисва проблеми с качесвото на материал или адитив
 class DeliveryQualityIssue(models.Model):
@@ -37,3 +39,5 @@ class DeliveryQualityIssue(models.Model):
 class Customer(models.Model):
     name = models.CharField(max_length=100)
     customer_own_labeling=models.BooleanField(default=False)
+    def __str__(self):
+        return self.name

@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.urls.base import reverse
 
+import equipment
+
 
 def home_view(request):
     user = request.user
@@ -24,7 +26,7 @@ def home_view(request):
                 {'title': 'Trading Parties', 'url': '', 'icon': 'building', 'color': 'text-primary'},
                 {'title': 'Accounts (HR)', 'url': '', 'icon': 'person-gear', 'color': 'text-info'},
                 {'title': 'Materials', 'url': '', 'icon': 'box-seam', 'color': 'text-warning'},
-                {'title': 'Equipment', 'url': '', 'icon': 'tools', 'color': 'text-warning'},
+                {'title': 'Equipment', 'url': reverse('equipment:combined_equipment'), 'icon': 'tools', 'color': 'text-warning'},
                 {'title': 'Създай QC Issue', 'url': '', 'icon': 'exclamation-octagon', 'color': 'text-danger'},
                 {'title': 'Job Log', 'url': '', 'icon': 'clipboard-data', 'color': 'text-secondary'},
             ])

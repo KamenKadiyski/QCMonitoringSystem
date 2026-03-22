@@ -31,7 +31,7 @@ class JobListView(ListView):
     page_title='List of Jobs'
 
     def get_queryset(self):
-        jobs = get_object_or_404(Job).order_by('job_code')
+        jobs = Job.objects.all().order_by('job_code')
         return jobs
 
     def get_context_data(self, **kwargs):

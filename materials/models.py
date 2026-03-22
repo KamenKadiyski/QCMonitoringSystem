@@ -37,3 +37,7 @@ class Additive(models.Model):
     name=models.CharField(max_length=100)
     supplier=models.ForeignKey('traidingparties.Supplier', on_delete=models.CASCADE,related_name='additives')
     additional_notes = models.TextField()
+    def __str__(self):
+        return self.name
+
+

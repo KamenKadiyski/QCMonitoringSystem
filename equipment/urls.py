@@ -1,15 +1,14 @@
 from django.urls import path
+from rest_framework.routers import DefaultRouter
 
 import equipment
 from equipment import views
 
 app_name = 'equipment'
 
-urlpatterns = [
-    path('', equipment.views.CombinedEquipmentView.as_view(), name='combined_equipment'),
-
-    path('machine/upload/', equipment.views.MachineUploadView.as_view(), name='machine_upload'),
-    path('tool/upload/', equipment.views.ToolUploadView.as_view(), name='tool_upload'),
+router = DefaultRouter()
+router.register('machines', views.MachineViewSet)
+router.register('tools', views.ToolViewSet)
 
 
-]
+urlpatterns = router.urls

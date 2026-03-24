@@ -34,7 +34,7 @@ AUTH_USER_MODEL = 'accounts.User'
 # Application definition
 PROJECT_APPS = [
     'accounts',
-    'equipment',
+    'equipment.apps.EquipmentConfig',
     'jobs',
     'materials',
     'qcloging',
@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'drf_spectacular'
 ] + PROJECT_APPS
 
 MIDDLEWARE = [
@@ -82,7 +83,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'QCMonitoringSystem.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
 
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Your Project API',
+    'DESCRIPTION': 'Your project description',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+
+}
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
@@ -140,14 +153,16 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "noreply@whatmoreuk.com"
 EMAIL_HOST_PASSWORD = "your-password"
-
+TOOL_TOLERANCE = 0.90
 import sentry_sdk
+from sentry_sdk import metrics
+
 sentry_sdk.init(
     dsn=os.getenv('SENTRY_LINK'),
-    # Add data like request headers and IP for users,
-    # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
     send_default_pii=True,
-)
+
+    )
+
 
 
 LOGIN_REDIRECT_URL = 'accounts:home'

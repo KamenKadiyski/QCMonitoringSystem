@@ -23,12 +23,13 @@ def home_view(request):
             menu_items.extend([
                 {'title': 'QC Logging', 'url': reverse('jobs:list_jobs'), 'icon': 'journal-check', 'color': 'text-primary'},
                 {'title': 'Jobs', 'url': reverse('jobs:list_jobs'), 'icon': 'briefcase', 'color': 'text-primary'},
-                {'title': 'Trading Parties', 'url': '', 'icon': 'building', 'color': 'text-primary'},
-                {'title': 'Accounts (HR)', 'url': '', 'icon': 'person-gear', 'color': 'text-info'},
-                {'title': 'Materials', 'url': '', 'icon': 'box-seam', 'color': 'text-warning'},
-                {'title': 'Equipment', 'url': reverse('equipment:combined_equipment'), 'icon': 'tools', 'color': 'text-warning'},
-                {'title': 'Създай QC Issue', 'url': '', 'icon': 'exclamation-octagon', 'color': 'text-danger'},
-                {'title': 'Job Log', 'url': '', 'icon': 'clipboard-data', 'color': 'text-secondary'},
+                {'title': 'Trading Parties', 'url': None, 'icon': 'building', 'color': 'text-primary'},
+                {'title': 'Accounts (HR)', 'url': None, 'icon': 'person-gear', 'color': 'text-info'},
+                {'title': 'Materials', 'url': None, 'icon': 'box-seam', 'color': 'text-warning'},
+                {'title': 'Tools', 'url': reverse('equipment:tool-list'), 'icon': 'tools', 'color': 'text-warning'},
+                {'title': 'Machine', 'url': reverse('equipment:machine-list'), 'icon': 'machines', 'color': 'text-warning'},
+                {'title': 'Създай QC Issue', 'url': None, 'icon': 'exclamation-octagon', 'color': 'text-danger'},
+                {'title': 'Job Log', 'url': None, 'icon': 'clipboard-data', 'color': 'text-secondary'},
             ])
             # Можем да спрем дотук, за да не минаваме през останалите проверки
             return render(request, 'shared/template.html', {'menu_items': menu_items})
@@ -36,9 +37,9 @@ def home_view(request):
         # 2. QC МЕНИДЖЪР
         if 'QC Manager' in user_groups:
             menu_items.extend([
-                {'title': 'QC Logging', 'url': '', 'icon': 'journal-check', 'color': 'text-primary'},
+                {'title': 'QC Logging', 'url': None, 'icon': 'journal-check', 'color': 'text-primary'},
                 {'title': 'Jobs', 'url': reverse('jobs:list_jobs'), 'icon': 'briefcase', 'color': 'text-primary'},
-                {'title': 'Trading Parties', 'url': '', 'icon': 'building', 'color': 'text-primary'},
+                {'title': 'Trading Parties', 'url': None, 'icon': 'building', 'color': 'text-primary'},
             ])
 
 
@@ -46,22 +47,22 @@ def home_view(request):
 
         # 3. HR (Accounts CRUD)
         if 'HR' in user_groups:
-            menu_items.append({'title': 'Accounts (HR)', 'url': '', 'icon': 'person-gear', 'color': 'text-info'})
+            menu_items.append({'title': 'Accounts (HR)', 'url': None, 'icon': 'person-gear', 'color': 'text-info'})
 
         # 4. PRODUCTION MANAGER (Materials & Equipment)
         if 'Production Manager' in user_groups:
             menu_items.extend([
-                {'title': 'Materials', 'url': '', 'icon': 'box-seam', 'color': 'text-warning'},
-                {'title': 'Equipment', 'url': '', 'icon': 'tools', 'color': 'text-warning'},
+                {'title': 'Materials', 'url': None, 'icon': 'box-seam', 'color': 'text-warning'},
+                {'title': 'Equipment', 'url': None, 'icon': 'tools', 'color': 'text-warning'},
             ])
 
         # 5. SUPERVISOR, QC INSPECTOR, TEAM LEADER (QC Issue Creation)
         special_roles = ['Supervisor', 'QC Inspector', 'Team Leader']
         if any(role in user_groups for role in special_roles):
-            menu_items.append({'title': 'Създай QC Issue', 'url': '', 'icon': 'exclamation-octagon', 'color': 'text-danger'})
+            menu_items.append({'title': 'Създай QC Issue', 'url': None, 'icon': 'exclamation-octagon', 'color': 'text-danger'})
 
         # 6. COLOURMEN (JobLog & Скрап)
         if 'Colourmen' in user_groups:
-            menu_items.append({'title': 'Job Log', 'url': '', 'icon': 'clipboard-data', 'color': 'text-secondary'})
+            menu_items.append({'title': 'Job Log', 'url': None, 'icon': 'clipboard-data', 'color': 'text-secondary'})
 
     return render(request, 'shared/template.html', {'menu_items': menu_items})

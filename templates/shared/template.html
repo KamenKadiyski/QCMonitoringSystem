@@ -27,7 +27,7 @@
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for item in menu_items %}
         <div class="col">
-            <a href="{{ item.url }}" class="text-decoration-none h-100 d-block">
+            <a href="{{ item.url|default:'#'  }}" class="text-decoration-none h-100 d-block">
                 <div class="card h-100 border-0 shadow-sm transition-hover p-3">
                     <div class="card-body text-center d-flex flex-column align-items-center justify-content-center">
                         <div class="icon-box mb-3 {{ item.color }} bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 70px; height: 70px;">

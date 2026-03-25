@@ -1,6 +1,6 @@
 {
     "code": "BMB-08",
-    "description": "Матрица за капачки 38mm (IML) - 12 гнезда",
+    "description": "Caps 38mm (IML) - 12 impression",
     "clamping_force": 2100,
     "tool_width": 620.0,
     "tool_height": 550.0,

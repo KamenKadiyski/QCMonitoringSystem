@@ -15,10 +15,6 @@ jobs:
       - name: Run Docker Compose
         shell: powershell
         run: |
-          # Отиваме в папката, където GitHub е свалил проекта
-          cd "C:\actions-runner\_work\QCMonitotingSystem\QCMonitotingSystem"
-          
-          # Стартираме Docker
+          # Влизаме в папката на проекта на Windows (промени пътя, ако е друг)
           docker-compose down
           docker-compose up -d --build
-

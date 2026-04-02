@@ -16,7 +16,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:17
+        image: postgres:18
         env:
           POSTGRES_DB: qc_test
           POSTGRES_USER: postgres
@@ -70,7 +70,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '25' # LTS версия
+          node-version: '24' # LTS версия
           cache: 'npm'
           cache-dependency-path: 'frontend/package-lock.json'
 

@@ -1,6 +1,6 @@
 from django import forms
 
-from jobs.models import *
+from backend.jobs.models import *
 
 
 class CreateJobForm(forms.ModelForm):

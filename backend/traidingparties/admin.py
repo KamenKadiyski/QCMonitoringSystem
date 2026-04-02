@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from traidingparties.models import *
+from backend.traidingparties.models import *
 
 
 # Register your models here.

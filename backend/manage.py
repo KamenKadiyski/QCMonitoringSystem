@@ -2,6 +2,10 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from pathlib import Path
+
+# Ensure repo root is importable so `backend.*` packages resolve in CI.
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 
 def main():

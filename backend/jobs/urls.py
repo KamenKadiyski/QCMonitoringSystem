@@ -2,7 +2,7 @@
 
 from django.urls import path, include
 
-from jobs.views import *
+from backend.jobs.views import *
 
 app_name = 'jobs'
 

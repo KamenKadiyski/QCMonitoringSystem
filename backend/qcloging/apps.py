@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class QclogingConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'qcloging'
+    name = 'backend.qcloging'

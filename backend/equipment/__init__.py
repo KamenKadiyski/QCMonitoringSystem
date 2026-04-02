@@ -1,1 +1,1 @@
-default_app_config = 'equipment.apps.EquipmentConfig'
+"""Equipment app package."""

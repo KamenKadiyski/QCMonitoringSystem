@@ -13,10 +13,7 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
-from django.contrib import staticfiles
 from dotenv import load_dotenv
-
-from backend import accounts
 
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

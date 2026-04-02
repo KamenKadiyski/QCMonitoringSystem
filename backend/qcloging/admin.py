@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from qcloging.models import *
+from backend.qcloging.models import *
 
 
 # Register your models here.

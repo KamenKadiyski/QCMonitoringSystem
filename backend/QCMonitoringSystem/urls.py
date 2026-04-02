@@ -17,18 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from accounts.views import home_view
+from backend.accounts.views import home_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view, name='home'),
-    path('accounts/', include('accounts.urls')),
-    path('equipment/', include('equipment.urls')),
-    path('jobs/', include('jobs.urls')),
-    path('materials/', include('materials.urls')),
-    path('qcloging/', include('qcloging.urls')),
-    path('reports/', include('reports.urls')),
-    path('traidingparties/', include('traidingparties.urls')),
+    path('accounts/', include('backend.accounts.urls')),
+    path('equipment/', include('backend.equipment.urls')),
+    path('jobs/', include('backend.jobs.urls')),
+    path('materials/', include('backend.materials.urls')),
+    path('qcloging/', include('backend.qcloging.urls')),
+    path('reports/', include('backend.reports.urls')),
+    path('traidingparties/', include('backend.traidingparties.urls')),
 
 
 ]

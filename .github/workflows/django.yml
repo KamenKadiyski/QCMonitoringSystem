@@ -32,7 +32,7 @@ jobs:
       - name: Set up Python 3.14
         uses: actions/setup-python@v5
         with:
-          python-version: "3.14"
+          python-version: "3.14" # Използвай стабилна версия
           cache: 'pip'
           cache-dependency-path: 'backend/requirements.txt'
 
@@ -50,10 +50,12 @@ jobs:
           DB_PORT: 5432
           SECRET_KEY: "django-insecure-test-key"
           SENTRY_LINK: ""
+          # PYTHONPATH сочи към backend, за да може 'import accounts' да работи правилно
           PYTHONPATH: ${{ github.workspace }}/backend
         run: |
           cd backend
-          python manage.py test
+          # Тестваме конкретните приложения, за да избегнем откриването на "backend.accounts"
+          python manage.py test accounts equipment
 
   # --- ТЕСТОВЕ И БИЛД ЗА FRONTEND (React/Vite) ---
   frontend-ci:
@@ -65,7 +67,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '24' # Стабилна LTS версия
+          node-version: '25' # LTS версия
           cache: 'npm'
           cache-dependency-path: 'frontend/package-lock.json'
 
@@ -77,10 +79,4 @@ jobs:
       - name: Lint & Build
         run: |
           cd frontend
-          # npm run lint # Разкоментирай, ако имаш ESLint
           npm run build
-
-      # - name: Run Frontend Tests
-      #   run: |
-          # cd frontend
-          # npm test # Разкоментирай, ако имаш Vitest/Jest

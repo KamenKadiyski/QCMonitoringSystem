@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from QCMonitoringSystem.settings import TOOL_TOLERANCE
+from backend.QCMonitoringSystem.settings import TOOL_TOLERANCE
 from .models import Tool, Machine
 from django.db.models import Q
 import logging

@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:18
+    image: postgres:17  # Променено от 18 на 17 за стабилност
     environment:
       POSTGRES_DB: qc_db
       POSTGRES_USER: user
@@ -10,6 +10,9 @@ services:
 
   backend:
     build: ./backend
+    # Указваме на Docker, че командите се изпълняват в /app (където е manage.py)
+    working_dir: /app
+    entrypoint: ./entrypoint.sh
     environment:
       DATABASE_URL: postgres://user:pass@db:5432/qc_db
       DEBUG: "False"

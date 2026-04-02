@@ -9,9 +9,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 THICKNESS_MIN_RATIO = 0.30
+TOOL_TOLERANCE = settings.TOOL_TOLERANCE
 
-
-def tool_is_compatible(tool, machine, tolerance=settings.TOOL_TOLERANCE):
+def tool_is_compatible(tool, machine, tolerance=TOOL_TOLERANCE):
     is_compatible = (
         tool.clamping_force <= machine.max_clamping_force * tolerance and
         tool.tool_width <= machine.max_tool_width * tolerance and

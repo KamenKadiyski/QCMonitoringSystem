@@ -1,4 +1,4 @@
-name: Django CI
+name: CI Pipeline (Backend & Frontend)
 
 on:
   push:
@@ -6,17 +6,14 @@ on:
   pull_request:
     branches: [ "master" ]
 
-
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
-  build:
+  # --- ТЕСТОВЕ ЗА BACKEND (Django) ---
+  backend-tests:
     runs-on: ubuntu-latest
 
     services:
       postgres:
-        image: postgres:18
+        image: postgres:17
         env:
           POSTGRES_DB: qc_test
           POSTGRES_USER: postgres
@@ -30,28 +27,59 @@ jobs:
           --health-retries 5
 
     steps:
-    # Използвайте v4 за checkout (той поддържа по-нови версии на Node)
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    # Използвайте v5 за setup-python (това е най-новата версия)
-    - name: Set up Python 3.14
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.14"
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+          cache: 'pip'
+          cache-dependency-path: 'backend/requirements.txt'
 
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
 
-    - name: Run Tests
-      env:
-        DB_NAME: qc_test
-        DB_USER: postgres
-        DB_PASSWORD: postgres
-        DB_HOST: localhost
-        DB_PORT: 5432
-        SECRET_KEY: "django-insecure-test-key"
-        SENTRY_LINK: ""
-      run: |
-        python manage.py test
+      - name: Run Django Tests
+        env:
+          DB_NAME: qc_test
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          DB_HOST: localhost
+          DB_PORT: 5432
+          SECRET_KEY: "django-insecure-test-key"
+          SENTRY_LINK: ""
+        run: |
+          cd backend
+          python manage.py test
+
+  # --- ТЕСТОВЕ И БИЛД ЗА FRONTEND (React/Vite) ---
+  frontend-ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24' # Стабилна LTS версия
+          cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'
+
+      - name: Install Dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Lint & Build
+        run: |
+          cd frontend
+          # npm run lint # Разкоментирай, ако имаш ESLint
+          npm run build
+
+      # - name: Run Frontend Tests
+      #   run: |
+          # cd frontend
+          # npm test # Разкоментирай, ако имаш Vitest/Jest

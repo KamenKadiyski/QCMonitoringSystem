@@ -15,9 +15,9 @@ jobs:
       postgres:
         image: postgres:18
         env:
-          POSTGRES_DB: DB_NAME
-          POSTGRES_USER: DB_USER
-          POSTGRES_PASSWORD: DB_PASSWORD   v
+          POSTGRES_DB: qc_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
         options: >-
@@ -26,34 +26,29 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-    strategy:
-      max-parallel: 4
-      matrix:
-        python-version: ["3.14"]
-
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4 # По-нова версия на action-а
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v4
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: "3.14"
 
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+
     - name: Run Tests
-      # 2. Описваме променливите, които Django очаква да прочете от .env
       env:
-        DB_NAME: DB_NAME
-        DB_USER: DB_USER
-        DB_PASSWORD: DB_PASSWORD
+
+        DB_NAME: qc_test
+        DB_USER: postgres
+        DB_PASSWORD: postgres
         DB_HOST: localhost
         DB_PORT: 5432
-        #SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        SECRET_KEY: "dummy-key-for-tests-123"
-        DEBUG: "False"
+        SECRET_KEY: "django-insecure-test-key"
+        SENTRY_LINK: ""
       run: |
         python manage.py test

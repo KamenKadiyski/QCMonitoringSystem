@@ -8,6 +8,7 @@ class Supplier(models.Model):
     def __str__(self):
         return self.name
 
+
 #Модела опсисва проблеми с качесвото на материал или адитив
 class DeliveryQualityIssue(models.Model):
     supplier=models.ForeignKey(Supplier, on_delete=models.CASCADE,related_name='delivery_quality_issues')

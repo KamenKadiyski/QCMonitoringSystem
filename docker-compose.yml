@@ -10,14 +10,13 @@ services:
 
   backend:
     build: ./backend
-    # Указваме на Docker, че командите се изпълняват в /app (където е manage.py)
     working_dir: /app
-    entrypoint: ./entrypoint.sh
     environment:
       DATABASE_URL: postgres://user:pass@db:5432/qc_db
       DEBUG: "False"
     depends_on:
       - db
+  
 
   frontend:
     build: ./frontend

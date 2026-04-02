@@ -1,15 +1,19 @@
 FROM python:3.14-slim
 
+# Инсталираме зависимостите
+RUN apt-get update && apt-get install -y libpq-dev gcc && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
-# Копираме съдържанието на текущата папка в /app/backend
-# ... (всичко до COPY . .)
+# Копираме САМО съдържанието на папка backend в /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Копираме съдържанието на папка backend в /app на контейнера
+# Копираме останалото
 COPY . .
 
-# Поправяме символите за нов ред (CRLF -> LF) и даваме права
+# Поправяме Windows символите и даваме права
 RUN sed -i 's/\r$//' entrypoint.sh && chmod +x entrypoint.sh
 
-# Указваме директно името на файла, защото сме в WORKDIR /app
-ENTRYPOINT ["./entrypoint.sh"]
+# Директно стартиране
+ENTRYPOINT ["/app/entrypoint.sh"]

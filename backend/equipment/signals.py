@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from backend.QCMonitoringSystem.settings import TOOL_TOLERANCE
+from django.conf import settings
 from .models import Tool, Machine
 from django.db.models import Q
 import logging
@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 THICKNESS_MIN_RATIO = 0.30
 
 
-def tool_is_compatible(tool, machine, tolerance=TOOL_TOLERANCE):
+def tool_is_compatible(tool, machine, tolerance=settings.TOOL_TOLERANCE):
     is_compatible = (
         tool.clamping_force <= machine.max_clamping_force * tolerance and
         tool.tool_width <= machine.max_tool_width * tolerance and

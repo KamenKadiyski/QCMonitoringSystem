@@ -50,6 +50,7 @@ jobs:
           DB_PORT: 5432
           SECRET_KEY: "django-insecure-test-key"
           SENTRY_LINK: ""
+          PYTHONPATH: ${{ github.workspace }}/backend
         run: |
           cd backend
           python manage.py test

@@ -125,5 +125,11 @@ class ProductionSystemTest(TestCase):
         tool.injection_capacity = 10500  # 10500 > 9350 (safe limit)
         tool.save()
 
+        # КРИТИЧНАТА СТЪПКА: Опресняваме обекта на машината от базата данни
+        self.machine.refresh_from_db()
+
+        self.assertNotIn(tool, self.machine.compatible_tools.all())
+        print("✓ Signal: Successfully unlinked tool after parameters became incompatible.")
+
         self.assertNotIn(tool, self.machine.compatible_tools.all())
         print("✓ Signal: Successfully unlinked tool after parameters became unsafe.")

@@ -1,16 +1,11 @@
 #!/bin/bash
 set -e
 
-echo "--- СЪДЪРЖАНИЕ НА ПАПКА /APP ---"
-ls -la
+# Казваме на Python, че текущата папка (/app) е основният път за модули
+export PYTHONPATH=$PYTHONPATH:/app
 
-echo "--- ИЗПЪЛНЯВАНЕ НА МИГРАЦИИ ---"
-# Използваме директен път до manage.py
-python /app/manage.py migrate --noinput
+python manage.py migrate --noinput
+python manage.py collectstatic --noinput
 
-echo "--- СЪБИРАНЕ НА СТАТИКА ---"
-python /app/manage.py collectstatic --noinput
-
-echo "--- СТАРТИРАНЕ НА GUNICORN ---"
-# Провери дали името QCMonitoringSystem е точно такова (с 'r' или 't')
+# Стартираме без префикса 'backend.'
 exec gunicorn --bind 0.0.0.0:8000 QCMonitoringSystem.wsgi:application

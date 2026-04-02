@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-
+export DJANGO_SETTINGS_MODULE=backend.QCMonitoringSystem.settings
 # Казваме на Python, че текущата папка (/app) е основният път за модули
 export PYTHONPATH=$PYTHONPATH:/app
 

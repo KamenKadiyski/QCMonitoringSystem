@@ -14,6 +14,7 @@ services:
       dockerfile: backend/Dockerfile
     working_dir: /app
     environment:
+      DJANGO_SETTINGS_MODULE: backend.QCMonitoringSystem.settings
       DATABASE_URL: postgres://user:pass@db:5432/qc_db
       DEBUG: "False"
     depends_on:

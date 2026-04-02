@@ -1,0 +1,20 @@
+name: Deploy to Local Windows Server
+
+on:
+  push:
+    branches: [ "master" ]  # Изпълнява се само при push в master клона
+
+jobs:
+  deploy:
+    runs-on: self-hosted  # ТОВА КАЗВА: ИЗПЪЛНИ КОДА НА МОЯ WINDOWS
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Docker Compose
+        shell: powershell
+        run: |
+          # Влизаме в папката на проекта на Windows (промени пътя, ако е друг)
+          docker-compose down
+          docker-compose up -d --build

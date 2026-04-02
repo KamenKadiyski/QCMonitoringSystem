@@ -20,10 +20,6 @@ class AddToJobLogForm(forms.ModelForm):
         model = JobLog
         exclude = 'date_and_time',
 
-        widgets = {
-            'current_material': forms.Select(attrs={'class': 'form-check-input'}),
-            'current_additive': forms.Select(attrs={'class': 'form-check-input'}),
-            'current_tool': forms.Select(attrs={'class': 'form-check-input'}),
-            'current_machine': forms.Select(attrs={'class': 'form-check-input'}),
 
-        }
+
+

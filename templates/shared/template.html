@@ -5,22 +5,29 @@
     <div class="row mb-4">
         <div class="col-md-8">
             <h2 class="fw-bold">QC Monitoring System</h2>
-            <p class="text-muted">Hello, {{ user.username|default:"Guest" }}. Вашият достъп е ограничен спрямо системната ви роля.</p>
+            <p class="text-muted">Hello, {{ user.username|default:"Guest" }}. Your access is limited to your system role.</p>
         </div>
         <div class="col-md-4 text-md-end">
-    <span class="badge bg-dark px-3 py-2">
-        Роля:
-        {% if user.is_superuser %}
-            Администратор
-        {% else %}
-            {% for group in user.groups.all %}
-                {{ group.name }}{% if not forloop.last %}, {% endif %}
-            {% empty %}
-                Външен потребител
-            {% endfor %}
-        {% endif %}
-    </span>
-</div>
+            <span class="badge bg-dark px-3 py-2">
+                Role:
+                {% if user.is_superuser %}
+                    Admin
+                {% else %}
+                    {% for group in user.groups.all %}
+                        {{ group.name }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        External user
+                    {% endfor %}
+                {% endif %}
+            </span>
+            {% if user.is_authenticated %}
+                <div class="mt-2">
+                    <a href="{% url 'accounts:password_change' %}" class="btn btn-outline-primary btn-sm">
+                        Change Password
+                    </a>
+                </div>
+            {% endif %}
+        </div>
 
     </div>
 

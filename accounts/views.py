@@ -1,7 +1,27 @@
+from django.contrib.auth import update_session_auth_hash
 from django.shortcuts import render
 from django.urls.base import reverse
+from rest_framework import viewsets, permissions
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.tokens import RefreshToken
 
-import equipment
+from .models import Employee, WorkPosition
+from .serializers import EmployeeSerializer, WorkPositionSerializer, ChangePasswordSerializer
+
+
+class WorkPositionViewSet(viewsets.ModelViewSet):
+    queryset = WorkPosition.objects.all()
+    serializer_class = WorkPositionSerializer
+    permission_classes = [permissions.AllowAny]
+
+class EmployeeViewSet(viewsets.ModelViewSet):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+
 
 
 def home_view(request):
@@ -9,29 +29,28 @@ def home_view(request):
     menu_items = []
 
     # 1. ОБЩОДОСТЪПНИ
-    menu_items.append({
-        'title': 'Въведи Скрап', 'url': '',
-        'icon': 'recycle', 'color': 'text-success'
-    })
+    if not user.is_authenticated or user.role!='hr':
+        menu_items.append({'title': 'Add to scrap log', 'url': reverse('jobs:add_scrap_log'),'icon': 'recycle', 'color': 'text-success'})
 
     if user.is_authenticated:
-        # Вземаме групите
+
         user_groups = list(user.groups.values_list('name', flat=True))
 
-        # АКО Е SUPERUSER - добавяме всичко директно и връщаме резултата
+        # АКО Е SUPERUSER
         if user.is_superuser:
             menu_items.extend([
                 {'title': 'QC Logging', 'url': reverse('jobs:list_jobs'), 'icon': 'journal-check', 'color': 'text-primary'},
                 {'title': 'Jobs', 'url': reverse('jobs:list_jobs'), 'icon': 'briefcase', 'color': 'text-primary'},
                 {'title': 'Trading Parties', 'url': None, 'icon': 'building', 'color': 'text-primary'},
-                {'title': 'Accounts (HR)', 'url': None, 'icon': 'person-gear', 'color': 'text-info'},
+                {'title': 'Accounts (HR)', 'url': 'http://127.0.0.1:5173', 'icon': 'person-gear', 'color': 'text-info'},
                 {'title': 'Materials', 'url': None, 'icon': 'box-seam', 'color': 'text-warning'},
                 {'title': 'Tools', 'url': reverse('equipment:tool-list'), 'icon': 'tools', 'color': 'text-warning'},
                 {'title': 'Machine', 'url': reverse('equipment:machine-list'), 'icon': 'machines', 'color': 'text-warning'},
                 {'title': 'Създай QC Issue', 'url': None, 'icon': 'exclamation-octagon', 'color': 'text-danger'},
-                {'title': 'Job Log', 'url': None, 'icon': 'clipboard-data', 'color': 'text-secondary'},
+                {'title': 'Job Log', 'url': reverse('jobs:list_jobs_logs'), 'icon': 'clipboard-data', 'color': 'text-secondary'},
+                {'title': 'Scrap Reason', 'url': reverse('jobs:add_scrap_reason'), 'icon': 'clipboard-data','color': 'text-secondary'},
             ])
-            # Можем да спрем дотук, за да не минаваме през останалите проверки
+
             return render(request, 'shared/template.html', {'menu_items': menu_items})
 
         # 2. QC МЕНИДЖЪР
@@ -40,6 +59,8 @@ def home_view(request):
                 {'title': 'QC Logging', 'url': None, 'icon': 'journal-check', 'color': 'text-primary'},
                 {'title': 'Jobs', 'url': reverse('jobs:list_jobs'), 'icon': 'briefcase', 'color': 'text-primary'},
                 {'title': 'Trading Parties', 'url': None, 'icon': 'building', 'color': 'text-primary'},
+                {'title': 'Scrap Reason', 'url': reverse('jobs:add_scrap_reason'), 'icon': 'clipboard-data',
+                 'color': 'text-secondary'},
             ])
 
 
@@ -47,22 +68,54 @@ def home_view(request):
 
         # 3. HR (Accounts CRUD)
         if 'HR' in user_groups:
-            menu_items.append({'title': 'Accounts (HR)', 'url': None, 'icon': 'person-gear', 'color': 'text-info'})
+            menu_items.append({'title': 'Accounts (HR)', 'url': 'http://127.0.0.1:5173', 'icon': 'person-gear', 'color': 'text-info'})
 
         # 4. PRODUCTION MANAGER (Materials & Equipment)
-        if 'Production Manager' in user_groups:
+        if any(group.lower() == 'production manager' for group in user_groups):
             menu_items.extend([
                 {'title': 'Materials', 'url': None, 'icon': 'box-seam', 'color': 'text-warning'},
                 {'title': 'Equipment', 'url': None, 'icon': 'tools', 'color': 'text-warning'},
             ])
 
         # 5. SUPERVISOR, QC INSPECTOR, TEAM LEADER (QC Issue Creation)
-        special_roles = ['Supervisor', 'QC Inspector', 'Team Leader']
+        special_roles = ['Supervisor', 'Supervisors', 'QC Inspector', 'Team Leader']
         if any(role in user_groups for role in special_roles):
-            menu_items.append({'title': 'Създай QC Issue', 'url': None, 'icon': 'exclamation-octagon', 'color': 'text-danger'})
-
+            menu_items.append([{'title': 'Създай QC Issue','url': None,'icon': 'exclamation-octagon','color': 'text-danger'},
+                {'title': 'Job Log', 'url': reverse('jobs:list_jobs_logs'), 'icon': 'clipboard-data', 'color': 'text-secondary'}]
+            )
         # 6. COLOURMEN (JobLog & Скрап)
         if 'Colourmen' in user_groups:
-            menu_items.append({'title': 'Job Log', 'url': None, 'icon': 'clipboard-data', 'color': 'text-secondary'})
+            menu_items.append({'title': 'Job Log', 'url': reverse('jobs:list_jobs_logs'), 'icon': 'clipboard-data', 'color': 'text-secondary'})
 
     return render(request, 'shared/template.html', {'menu_items': menu_items})
+
+
+
+
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(status=205)
+        except Exception:
+            return Response(status=400)
+
+
+class ChangePasswordView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication, JWTAuthentication]
+
+    def post(self, request):
+        serializer = ChangePasswordSerializer(data=request.data, context={"request": request})
+        serializer.is_valid(raise_exception=True)
+
+        user = request.user
+        user.set_password(serializer.validated_data["new_password"])
+        user.save(update_fields=["password"])
+        update_session_auth_hash(request, user)
+
+        return Response({"detail": "Password changed successfully."}, status=200)

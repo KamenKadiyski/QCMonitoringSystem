@@ -18,6 +18,10 @@ class User(AbstractUser):
             ("manager", "Manager"),
             ("admin", "Administrator"),
             ("qc manager", "QC Manager"),
+            ("supervisor", "Supervisor"),
+            ("team leader", "Team Leader"),
+            ("colourman", "Colourman"),
+            ("production manager", "Production Manager")
         )
 
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)

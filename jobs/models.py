@@ -21,11 +21,17 @@ class JobLog(models.Model):
     current_tool=models.ForeignKey('equipment.Tool', on_delete=models.CASCADE,related_name='job_tool')
     current_machine=models.ForeignKey('equipment.Machine', on_delete=models.CASCADE,related_name='job_machine')
     date_and_time=models.DateTimeField(auto_now_add=True)
+    is_complete=models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.job.job_code} - {self.job.description}'
 
 #Модела описва причините за бракуване на част от продукцията
 class ScrapReason(models.Model):
     name=models.CharField(max_length=100)
     description=models.TextField()
+    def __str__(self):
+        return self.name
 #Модела описва лог на бракуваната продукция.
 class ScrapLog(models.Model):
     job_log=models.ForeignKey(JobLog, on_delete=models.CASCADE,related_name='scraps')

@@ -3,13 +3,13 @@ FROM python:3.14-slim
 WORKDIR /app
 
 # Копираме съдържанието на текущата папка в /app/backend
-COPY . /app/backend/
+# ... (всичко до COPY . .)
 
-# Правим entrypoint скрипта изпълним
-RUN chmod +x /app/backend/entrypoint.sh
+# Копираме съдържанието на папка backend в /app на контейнера
+COPY . .
 
-# Инсталираме зависимостите
-RUN pip install --no-cache-dir -r /app/backend/requirements.txt
+# Поправяме символите за нов ред (CRLF -> LF) и даваме права
+RUN sed -i 's/\r$//' entrypoint.sh && chmod +x entrypoint.sh
 
-# Указваме entrypoint (пътят е вътре в папката backend)
-ENTRYPOINT ["/app/backend/entrypoint.sh"]
+# Указваме директно името на файла, защото сме в WORKDIR /app
+ENTRYPOINT ["./entrypoint.sh"]

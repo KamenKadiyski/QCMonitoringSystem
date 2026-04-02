@@ -9,14 +9,16 @@ services:
       - "5432:5432"
 
   backend:
-    build: ./backend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
     working_dir: /app
     environment:
       DATABASE_URL: postgres://user:pass@db:5432/qc_db
       DEBUG: "False"
     depends_on:
       - db
-  
+
 
   frontend:
     build: ./frontend

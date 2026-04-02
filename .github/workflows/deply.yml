@@ -15,6 +15,6 @@ jobs:
       - name: Run Docker Compose
         shell: powershell
         run: |
-          # Влизаме в папката на проекта на Windows (промени пътя, ако е друг)
+          # Влизаме в папката на проекта на Windows (промени пътя, ако е друг.)
           docker-compose down
           docker-compose up -d --build

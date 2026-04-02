@@ -16,6 +16,8 @@ from pathlib import Path
 from django.contrib import staticfiles
 from dotenv import load_dotenv
 
+from backend import accounts
+
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -63,13 +65,13 @@ AUTH_USER_MODEL = 'accounts.User'
 
 # Application definition
 PROJECT_APPS = [
-    'accounts',
-    'equipment.apps.EquipmentConfig',
-    'jobs',
-    'materials',
-    'qcloging',
-    'reports',
-    'traidingparties',
+    'backend.accounts',
+    'backend.equipment.apps.EquipmentConfig',
+    'backend.jobs',
+    'backend.materials',
+    'backend.qcloging',
+    'backend.reports',
+    'backend.traidingparties',
     'rest_framework',
 
 ]

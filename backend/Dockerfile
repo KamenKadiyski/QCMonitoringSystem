@@ -11,7 +11,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Копираме останалото
 COPY backend /app/backend
-COPY manage.py /app/manage.py
+COPY backend/manage.py /app/manage.py
 
 # Поправяме Windows символите и даваме права
 RUN sed -i 's/\r$//' backend/entrypoint.sh && chmod +x backend/entrypoint.sh

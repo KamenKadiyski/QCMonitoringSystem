@@ -11,53 +11,52 @@
         </div>
         <div class="d-flex gap-2">
             <a href="{% url 'home' %}" class="btn btn-outline-secondary d-inline-flex align-items-center">
-                <i class="bi bi-house-door me-2"></i> Начало
+                <i class="bi bi-house-door me-2"></i> Back to home
             </a>
             <a href="{% url 'qcloging:add_qc_log' %}" class="btn btn-success d-inline-flex align-items-center shadow-sm">
-                <i class="bi bi-plus-lg me-2"></i> Нов QC Запис
+                <i class="bi bi-plus-lg me-2"></i> New QC log
             </a>
+             <a href="{% url 'qcloging:list_qc_issues' %}" class="btn btn-success d-inline-flex align-items-center shadow-sm">
+                 <i class="bi bi-folder2-open me-2"></i> QC Issues
+             </a>
         </div>
     </div>
-
-    <!-- Филтър за търсене по дата -->
     <div class="card shadow-sm border-0 mb-4 bg-light">
         <div class="card-body py-3">
             <form method="get" class="row g-2 align-items-end">
                 <div class="col-auto">
-                    <label for="date_filter" class="form-label small fw-bold text-muted">Търсене по дата:</label>
+                    <label for="date_filter" class="form-label small fw-bold text-muted">Search by date:</label>
                     <input type="date" name="date_filter" id="date_filter" class="form-control form-control-sm" value="{{ request.GET.date_filter }}">
                 </div>
                 <div class="col-auto">
                     <button type="submit" class="btn btn-primary btn-sm px-3">
-                        <i class="bi bi-search me-1"></i> Филтрирай
+                        <i class="bi bi-search me-1"></i> Filter
                     </button>
                     {% if request.GET.date_filter %}
                     <a href="{% url 'qcloging:list_qc_logs' %}" class="btn btn-outline-danger btn-sm px-3">
-                        <i class="bi bi-x-circle me-1"></i> Изчисти
+                        <i class="bi bi-x-circle me-1"></i> Clear filter
                     </a>
                     {% endif %}
                 </div>
             </form>
         </div>
     </div>
-
-    <!-- Карта с Таблица -->
     <div class="card shadow-sm border-0 overflow-hidden">
         <div class="card-body p-0">
             <div class="table-responsive text-nowrap">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="bg-light text-secondary small text-uppercase">
                         <tr>
-                            <th class="ps-4 py-3">Дата / Час</th>
+                            <th class="ps-4 py-3">Date/Time</th>
                             <th>Job Log</th>
-                            <th>Инспектор</th>
-                            <th class="text-center">Първа мостра</th>
-                            <th class="text-center">Като мострата</th>
-                            <th class="text-center">Спец. лист</th>
-                            <th class="text-center">Етикети</th>
-                            <th class="text-center">Опаковка</th>
-                            <th class="text-center">Подпис оп.</th>
-                            <th class="text-center">Статус</th>
+                            <th>QC Inspector</th>
+                            <th class="text-center">'First of' sample</th>
+                            <th class="text-center">Same as 'First of' sample</th>
+                            <th class="text-center">Spec sheet</th>
+                            <th class="text-center">All labels are correct</th>
+                            <th class="text-center">Packing correctly</th>
+                            <th class="text-center">Operator's sheet signed</th>
+                            <th class="text-center">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -123,7 +122,7 @@
                         <tr>
                             <td colspan="10" class="text-center py-5 text-muted">
                                 <i class="bi bi-inbox fs-2 d-block mb-2"></i>
-                                Няма намерени QC записи.
+                                No QC logs yet!
                             </td>
                         </tr>
                         {% endfor %}

@@ -1,0 +1,78 @@
+{% extends "shared/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-dark text-white p-3">
+            <h4 class="mb-0 text-center"><i class="bi bi-clipboard-check"></i> Нов QC Дневник (Инспекция)</h4>
+        </div>
+        <div class="card-body p-4 text-dark">
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <!-- Основни данни -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Работен лог (Job Log)</label>
+                        {{ form.job_log }}
+                        {% if form.job_log.errors %}<div class="text-danger small">{{ form.job_log.errors }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">QC Инспектор</label>
+                        {{ form.qc_inspector }}
+                        {% if form.qc_inspector.errors %}<div class="text-danger small">{{ form.qc_inspector.errors }}</div>{% endif %}
+                    </div>
+                </div>
+
+                <hr class="my-4">
+                <h5 class="text-muted mb-3"><i class="bi bi-list-check"></i> Контролен списък за проверка</h5>
+
+                <!-- Чекбоксове (Boolean Fields) -->
+                <div class="row">
+                    {% for field in form %}
+                        {% if field.field.widget.input_type == "checkbox" %}
+                        <div class="col-md-6 mb-3">
+                            <div class="form-check form-switch p-3 border rounded bg-light d-flex justify-content-between align-items-center">
+                                <label class="form-check-label h6 mb-0 pe-3" for="{{ field.id_for_label }}">
+                                    {% if field.name == "first_of_sample_issued" %}Издадена първа мостра
+                                    {% elif field.name == "like_fos" %}Отговаря на първата мостра
+                                    {% elif field.name == "have_spec_sheet" %}Налична спецификация
+                                    {% elif field.name == "correct_labels" %}Правилни етикети
+                                    {% elif field.name == "packed_correctly" %}Правилно опаковано
+                                    {% elif field.name == "operator_sheet_signed" %}Подписан лист от оператор
+                                    {% elif field.name == "runs_with_flash" %}Работи с излишък (flash)
+                                    {% else %}{{ field.label }}{% endif %}
+                                </label>
+                                {{ field }}
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                    <a href="/" class="btn btn-outline-secondary px-4">Отказ</a>
+                    <button type="submit" class="btn btn-success btn-lg px-5">Запази запис</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Прави чекбоксовете по-големи и удобни за тъч */
+    .form-switch .form-check-input {
+        width: 3em;
+        height: 1.5em;
+        cursor: pointer;
+    }
+    .form-check-input:checked {
+        background-color: #198754;
+        border-color: #198754;
+    }
+    .bg-light:hover {
+        background-color: #f0f0f0 !important;
+        transition: 0.3s;
+    }
+</style>
+{% endblock %}

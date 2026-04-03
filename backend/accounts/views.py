@@ -40,7 +40,7 @@ def home_view(request):
         # АКО Е SUPERUSER
         if user.is_superuser:
             menu_items.extend([
-                {'title': 'QC Logging', 'url': reverse('jobs:list_jobs'), 'icon': 'journal-check', 'color': 'text-primary'},
+                {'title': 'QC Logging', 'url': reverse('qcloging:list_qc_logs'), 'icon': 'journal-check', 'color': 'text-primary'},
                 {'title': 'Jobs', 'url': reverse('jobs:list_jobs'), 'icon': 'briefcase', 'color': 'text-primary'},
                 {'title': 'Trading Parties', 'url': None, 'icon': 'building', 'color': 'text-primary'},
                 {'title': 'Accounts (HR)', 'url': 'http://localhost:5173', 'icon': 'person-gear', 'color': 'text-info'},
@@ -57,7 +57,7 @@ def home_view(request):
         # 2. QC МЕНИДЖЪР
         if 'QC Manager' in user_groups:
             menu_items.extend([
-                {'title': 'QC Logging', 'url': None, 'icon': 'journal-check', 'color': 'text-primary'},
+                {'title': 'QC Logging', 'url': reverse('qcloging:list_qc_logs'), 'icon': 'journal-check', 'color': 'text-primary'},
                 {'title': 'Jobs', 'url': reverse('jobs:list_jobs'), 'icon': 'briefcase', 'color': 'text-primary'},
                 {'title': 'Trading Parties', 'url': None, 'icon': 'building', 'color': 'text-primary'},
                 {'title': 'Scrap Reason', 'url': reverse('jobs:add_scrap_reason'), 'icon': 'clipboard-data',
@@ -83,7 +83,8 @@ def home_view(request):
         if any(role in user_groups for role in special_roles):
             menu_items.extend([
                 {'title': 'Създай QC Issue', 'url': None, 'icon': 'exclamation-octagon', 'color': 'text-danger'},
-                {'title': 'Job Log', 'url': reverse('jobs:list_jobs_logs'), 'icon': 'clipboard-data', 'color': 'text-secondary'}
+                {'title': 'Job Log', 'url': reverse('jobs:list_jobs_logs'), 'icon': 'clipboard-data', 'color': 'text-secondary'},
+                {'title': 'QC Logging', 'url': reverse('qcloging:list_qc_logs'), 'icon': 'journal-check','color': 'text-primary'},
             ])
         # 6. COLOURMEN (JobLog & Скрап)
         if 'Colourmen' in user_groups:

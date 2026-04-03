@@ -1,0 +1,135 @@
+{% extends "shared/base.html" %}
+
+{% block content %}
+<div class="container mt-5 pb-5 text-dark">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <!-- Основна карта за редакция -->
+            <div class="card shadow-lg border-0 border-top border-warning border-4">
+                <!-- Header -->
+                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0 text-dark fw-bold">
+                        <i class="bi bi-pencil-square text-warning me-2"></i>
+                        {{ page_title }}: {{ object.name }}
+                    </h4>
+                    <span class="badge bg-light text-dark border px-3 py-2 small">ID: #{{ object.pk }}</span>
+                </div>
+
+                <div class="card-body p-4 bg-white">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        {% if form.errors %}
+                        <div class="alert alert-danger shadow-sm mb-4">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            Грешка при запис! Проверете червените полета по-долу.
+                        </div>
+                        {% endif %}
+
+                        <!-- Секция 1: Основна информация -->
+                        <div class="mb-4">
+                            <h5 class="text-warning border-bottom pb-2 fw-bold mb-3 small text-uppercase">1. Общи данни</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Наименование</label>
+                                    {{ form.name }}
+                                    {% if form.name.errors %}<div class="text-danger small">{{ form.name.errors }}</div>{% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Доставчик</label>
+                                    {{ form.supplier }}
+                                    {% if form.supplier.errors %}<div class="text-danger small">{{ form.supplier.errors }}</div>{% endif %}
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label fw-bold">Тип материал</label>
+                                    {{ form.type }}
+                                    {% if form.type.errors %}<div class="text-danger small">{{ form.type.errors }}</div>{% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Секция 2: Технически характеристики -->
+                        <div class="mb-4">
+                            <h5 class="text-warning border-bottom pb-2 fw-bold mb-3 small text-uppercase">2. Техническа спецификация</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">MFI / MFR (Индекс на течливост)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light text-muted fw-bold">g/10min</span>
+                                        {{ form.mfi_mfr }}
+                                    </div>
+                                    {% if form.mfi_mfr.errors %}<div class="text-danger small">{{ form.mfi_mfr.errors }}</div>{% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Плътност (Density)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light text-muted fw-bold">kg/m³</span>
+                                        {{ form.density }}
+                                    </div>
+                                    {% if form.density.errors %}<div class="text-danger small">{{ form.density.errors }}</div>{% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Секция 3: Оптични свойства и Издръжливост -->
+                        <div class="mb-4">
+                            <h5 class="text-warning border-bottom pb-2 fw-bold mb-3 small text-uppercase">3. Крайни свойства</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Клас Издръжливост</label>
+                                    {{ form.product_durability }}
+                                    {% if form.product_durability.errors %}<div class="text-danger small">{{ form.product_durability.errors }}</div>{% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Оптичен ефект</label>
+                                    {{ form.product_optic }}
+                                    {% if form.product_optic.errors %}<div class="text-danger small">{{ form.product_optic.errors }}</div>{% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Допълнителни бележки -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Допълнителни бележки</label>
+                            {{ form.additional_notes }}
+                            {% if form.additional_notes.errors %}<div class="text-danger small">{{ form.additional_notes.errors }}</div>{% endif %}
+                        </div>
+
+                        <hr class="my-4 opacity-25">
+
+                        <!-- Действия -->
+                        <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+                            <a href="{% url 'materials:list_materials' %}" class="btn btn-outline-secondary px-4 order-2 order-md-1">
+                                <i class="bi bi-arrow-left"></i> Назад към списъка
+                            </a>
+                            <button type="submit" class="btn btn-warning btn-lg px-5 text-dark fw-bold shadow order-1 order-md-2">
+                                <i class="bi bi-check2-circle me-2"></i> Обнови материала
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <p class="text-center text-muted mt-3 small">
+                <i class="bi bi-info-circle"></i> Промените ще бъдат отразени веднага във всички рецепти, ползващи този материал.
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Акцент за редактируеми полета */
+    .form-control:focus, .form-select:focus {
+        border-color: #ffc107;
+        box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.2);
+    }
+    textarea.form-control {
+        min-height: 120px;
+    }
+    .card {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    .input-group-text { font-size: 0.8rem; font-family: monospace; }
+</style>
+{% endblock %}

@@ -3,7 +3,6 @@
 {% block content %}
 <div class="container-fluid mt-4">
     <div class="row">
-        <!-- Лява колона: Форма за регистриране на брак -->
         <div class="col-lg-4">
             <div class="card shadow-sm border-danger mb-4">
                 <div class="card-header bg-danger text-white">
@@ -29,8 +28,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Дясна колона: Лог на брака -->
         <div class="col-lg-8">
             <div class="card shadow-sm">
                 <div class="card-header bg-light d-flex justify-content-between align-items-center">
@@ -45,7 +42,6 @@
                                 <th>Job Log #</th>
                                 <th>Reason</th>
                                 <th class="text-center">Amount</th>
-
                             </tr>
                         </thead>
                         <tbody>
@@ -57,7 +53,6 @@
                                 <td class="text-center">
                                     <span class="text-danger fw-bold">{{ log.amount_scrap }} pcs.</span>
                                 </td>
-
                             </tr>
                             {% empty %}
                             <tr>
@@ -76,7 +71,6 @@
 </div>
 
 <style>
-    /* Стилизиране на формата за Bootstrap */
     input, select {
         display: block;
         width: 100%;

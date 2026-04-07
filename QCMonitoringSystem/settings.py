@@ -37,8 +37,9 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-exam-key-123')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+print(f"--- CHECK: DEBUG is {DEBUG} ---")
 
-ALLOWED_HOSTS = ['qc-monitoring.azurewebsites.net', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 
@@ -72,13 +73,13 @@ AUTH_USER_MODEL = 'accounts.User'
 
 # Application definition
 PROJECT_APPS = [
-    'backend.accounts',
-    'backend.equipment.apps.EquipmentConfig',
-    'backend.jobs',
-    'backend.materials',
-    'backend.qcloging',
-    'backend.reports',
-    'backend.traidingparties',
+    'accounts',
+    'equipment.apps.EquipmentConfig',
+    'jobs',
+    'materials',
+    'qcloging',
+    'reports',
+    'traidingparties',
     'rest_framework',
 
 ]

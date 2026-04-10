@@ -1,12 +1,10 @@
-name: CI Pipeline (Backend & Frontend)
+name: CI Pipeline (Backend)
 
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-
-
 
 jobs:
   # --- ТЕСТОВЕ ЗА BACKEND (Django) ---
@@ -29,12 +27,13 @@ jobs:
           --health-retries 5
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Set up Python 3.14
         uses: actions/setup-python@v5
         with:
-          python-version: "3.14" # Използвай стабилна версия
+          python-version: "3.14"
           cache: 'pip'
           cache-dependency-path: 'requirements.txt'
 
@@ -51,7 +50,5 @@ jobs:
           DB_HOST: localhost
           DB_PORT: 5432
           SECRET_KEY: "django-insecure-test-key"
-          SENTRY_LINK: ""
-          # PYTHONPATH сочи към backend, за да може 'import accounts' да работи правилно
           PYTHONPATH: ${{ github.workspace }}
-
+        run: python manage.py test

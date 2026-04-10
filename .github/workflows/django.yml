@@ -7,7 +7,6 @@ on:
     branches: [ "master" ]
 
 jobs:
-  # --- ТЕСТОВЕ ЗА BACKEND (Django) ---
   backend-tests:
     runs-on: ubuntu-latest
 
@@ -50,5 +49,9 @@ jobs:
           DB_HOST: localhost
           DB_PORT: 5432
           SECRET_KEY: "django-insecure-test-key"
-          PYTHONPATH: ${{ github.workspace }}
-        run: python manage.py test
+          # ТОВА Е КЛЮЧОВО: Добавяме текущата папка към пътя на Python
+          PYTHONPATH: .
+        run: |
+          # Ако manage.py е в главната папка, остави така. 
+          # Ако е вътре в QCMonitoringSystem/, добави cd QCMonitoringSystem преди командата.
+          python manage.py test

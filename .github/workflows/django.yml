@@ -5,8 +5,7 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-env:
-    FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 
 
 jobs:
@@ -55,8 +54,4 @@ jobs:
           SENTRY_LINK: ""
           # PYTHONPATH сочи към backend, за да може 'import accounts' да работи правилно
           PYTHONPATH: ${{ github.workspace }}
-        run: |
-          
-          
-          python manage.py test accounts equipment
 

@@ -22,11 +22,6 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Make repo root importable so `backend.*` module paths resolve regardless
-# of whether the process is started via manage.py, django-admin, or WSGI/ASGI.
-REPO_ROOT = BASE_DIR.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
 
 # Quick-start development settings - unsuitable for production
@@ -37,7 +32,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-exam-key-123')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-print(f"--- CHECK: DEBUG is {DEBUG} ---")
+
 
 ALLOWED_HOSTS = ['*']
 

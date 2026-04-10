@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from backend.equipment.models import *
+from equipment.models import *
 
 
 # Register your models here.

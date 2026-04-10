@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from backend.materials.models import *
+from materials.models import *
 
 
 # Register your models here.

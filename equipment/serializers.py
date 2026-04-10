@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from backend.equipment.models import Machine, Tool
-from backend.equipment.signals import tool_is_compatible
+from equipment.models import Machine, Tool
+from equipment.signals import tool_is_compatible
 
 class FileUploadSerializer(serializers.Serializer):
     file = serializers.FileField()

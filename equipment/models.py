@@ -1,6 +1,6 @@
 from django.db import models
 
-from backend.equipment.validators import min_value_validator
+from equipment.validators import min_value_validator
 
 
 # Create your models here.

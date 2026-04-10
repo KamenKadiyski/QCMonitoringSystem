@@ -1,7 +1,7 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 
-from backend.equipment import views
+from equipment import views
 
 app_name = 'equipment'
 

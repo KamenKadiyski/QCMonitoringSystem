@@ -4,8 +4,8 @@ from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 
-from backend.jobs.forms import CreateJobForm, AddToJobLogForm
-from backend.jobs.models import Job, JobLog, ScrapReason, ScrapLog
+from jobs.forms import CreateJobForm, AddToJobLogForm
+from jobs.models import Job, JobLog, ScrapReason, ScrapLog
 
 
 # Create your views here.

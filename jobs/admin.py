@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from backend.jobs.models import *
+from jobs.models import *
 
 
 # Register your models here.

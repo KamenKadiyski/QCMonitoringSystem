@@ -216,6 +216,7 @@ EMAIL_USE_SSL = False
 EMAIL_HOST_USER = ""
 EMAIL_HOST_PASSWORD = ""
 
+
 TOOL_TOLERANCE = 0.90
 import sentry_sdk
 from sentry_sdk import metrics
